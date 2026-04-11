@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Appointment | HealthCore</title>
+    <link rel="stylesheet" href="assets/styles/tailwind.min.css">
+    <link rel="stylesheet" href="assets/styles/modern-theme.css">
+    <style>
+        :root {
+            --hc-overlay-top: rgba(7, 17, 37, 0.52);
+            --hc-overlay-bottom: rgba(4, 10, 24, 0.78);
+            --hc-accent: rgba(56, 189, 248, 0.24);
+            --hc-floor-glow: rgba(14, 116, 144, 0.24);
+        }
+
+        body {
+            position: relative;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 12% 18%, var(--hc-accent), transparent 48%),
+                linear-gradient(175deg, var(--hc-overlay-top), var(--hc-overlay-bottom)),
+                url("assets/images/clinic-bg.jpg"),
+                url("assets/images/clinic-bg-backup.jpg");
+            background-size: cover;
+            background-position: center 24%;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(148, 163, 184, 0.04) 0,
+                    rgba(148, 163, 184, 0.04) 2px,
+                    transparent 2px,
+                    transparent 38px
+                );
+            mix-blend-mode: soft-light;
+        }
+
+        body::after {
+            background:
+                linear-gradient(0deg, rgba(2, 6, 23, 0.38), rgba(2, 6, 23, 0)),
+                radial-gradient(circle at 50% 120%, rgba(56, 189, 248, 0.32), transparent 42%);
+        }
+
+        .scene-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .scene-overlay::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -7vh;
+            width: min(88vw, 980px);
+            height: 24vh;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, var(--hc-floor-glow) 0%, rgba(14, 116, 144, 0.1) 45%, transparent 72%);
+            filter: blur(4px);
+        }
+
+        .scene-overlay::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(77deg, transparent 0 34%, rgba(226, 232, 240, 0.12) 35%, transparent 36%),
+                linear-gradient(103deg, transparent 0 64%, rgba(226, 232, 240, 0.1) 65%, transparent 66%);
+            opacity: 0.55;
+        }
+
+        .doctor {
+            position: absolute;
+            bottom: 10vh;
+            width: clamp(50px, 5.2vw, 70px);
+            height: clamp(162px, 20vw, 220px);
+            border-radius: 999px;
+            background: linear-gradient(180deg, rgba(241, 245, 249, 0.86), rgba(100, 116, 139, 0.38));
+            box-shadow: 0 18px 40px rgba(2, 6, 23, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+            filter: blur(0.15px);
+            opacity: 0.9;
+            animation: walk-sway 3.8s ease-in-out infinite;
+        }
+
+        .doctor::before {
+            content: "";
+            position: absolute;
+            top: -26px;
+            left: 50%;
+            width: clamp(22px, 2.4vw, 28px);
+            height: clamp(22px, 2.4vw, 28px);
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: rgba(241, 245, 249, 0.7);
+            box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.34) inset;
+        }
+
+        .doctor::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -14px;
+            width: 78%;
+            height: 20px;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at center, rgba(2, 6, 23, 0.48), transparent 70%);
+        }
+
+        .doctor-a {
+            left: 55%;
+            transform: rotate(-4deg);
+        }
+
+        .doctor-b {
+            left: 64%;
+            height: clamp(150px, 19vw, 204px);
+            bottom: 10.6vh;
+            opacity: 0.82;
+            transform: rotate(3deg);
+            animation-delay: 0.55s;
+        }
+
+        @keyframes walk-sway {
+            0%,
+            100% {
+                margin-left: 0;
+                filter: blur(0.15px);
+            }
+            50% {
+                margin-left: 6px;
+                filter: blur(0.35px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-position: 58% 20%;
+                background-attachment: scroll;
+            }
+
+            .doctor-a {
+                left: 62%;
+            }
+
+            .doctor-b {
+                left: 74%;
+            }
+        }
+    </style>
+</head>
+<body class="hc-site hc-app min-h-screen py-12 px-4">
+    <div class="scene-overlay" aria-hidden="true">
+        <span class="doctor doctor-a"></span>
+        <span class="doctor doctor-b"></span>
+    </div>
+    <div class="relative z-10 max-w-3xl mx-auto bg-white/92 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/50">
+        <header class="mb-8 border-b pb-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-extrabold text-blue-700" data-i18n="form_title">Patient Inquiry</h1>
+                <p class="text-slate-500" data-i18n="form_subtitle">Complete the information below to request a call.</p>
+            </div>
+            <button type="button" onclick="toggleLanguage()" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-bold" id="langSwitcher">ES</button>
+        </header>
+
+        <div id="formNotice" class="hidden bg-amber-50 border-l-4 border-amber-500 p-4 text-amber-800 mb-6 rounded-r-lg"></div>
+
+        <div id="successMsg" class="hidden bg-green-50 border-l-4 border-green-500 p-6 text-green-700 mb-6 rounded-r-lg">
+            <h2 class="font-bold text-xl mb-2" data-i18n="success_h">Thank you for contacting HealthCore.</h2>
+            <p data-i18n="success_p">We have received your inquiry. A member of our reception team will contact you within 1 business day.</p>
+            <a href="index.html" class="mt-4 inline-block font-bold underline" data-i18n="back_home">Return to Homepage</a>
+        </div>
+
+        <form id="appointmentForm" class="space-y-6">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label for="firstName" class="block font-bold mb-2" data-i18n="l_fname">First Name</label>
+                    <input id="firstName" type="text" name="first_name" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="John" autocomplete="given-name" required>
+                    <p class="error text-red-500 text-sm mt-1 hidden" id="err_first_name" data-i18n="err_name">Name must contain only letters and at least 2 characters.</p>
+                </div>
+                <div>
+                    <label for="lastName" class="block font-bold mb-2" data-i18n="l_lname">Last Name</label>
+                    <input id="lastName" type="text" name="last_name" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Doe" autocomplete="family-name" required>
+                    <p class="error text-red-500 text-sm mt-1 hidden" id="err_last_name" data-i18n="err_name">Name must contain only letters and at least 2 characters.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label for="dobInput" class="block font-bold mb-2" data-i18n="l_dob">Date of Birth</label>
+                    <input type="date" name="date_of_birth" id="dobInput" class="w-full border p-3 rounded-lg outline-none" required>
+                </div>
+                <div>
+                    <label for="phoneInput" class="block font-bold mb-2" data-i18n="l_phone">Phone Number (+Country Code)</label>
+                    <input id="phoneInput" type="tel" name="phone" class="w-full border p-3 rounded-lg outline-none" placeholder="+1 305 555 0191" autocomplete="tel" required>
+                    <p class="error text-red-500 text-sm mt-1 hidden" id="err_phone" data-i18n="err_phone">Enter a valid phone number with country code.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label for="serviceInput" class="block font-bold mb-2" data-i18n="l_service">Required Service</label>
+                    <div class="relative">
+                        <select name="service_type" id="serviceInput" class="w-full appearance-none border border-slate-300 bg-white/90 px-4 py-3 rounded-xl outline-none shadow-sm transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100" required>
+                            <option value="" data-i18n="opt_select">Select...</option>
+                            <option value="Primary Care" data-i18n="opt_primary">Primary Care</option>
+                            <option value="Chronic Disease Management" data-i18n="opt_chronic">Chronic Disease Management</option>
+                            <option value="Paediatric Care" data-i18n="opt_paediatric">Paediatric Care</option>
+                            <option value="Specialist Consultation" data-i18n="opt_specialist">Specialist Consultation</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-cyan-600">
+                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.144l3.71-3.914a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="clinicInput" class="block font-bold mb-2" data-i18n="l_clinic">Preferred Clinic</label>
+                    <div class="relative">
+                        <select name="preferred_clinic" id="clinicInput" class="w-full appearance-none border border-slate-300 bg-white/90 px-4 py-3 rounded-xl outline-none shadow-sm transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100" required>
+                            <option value="" data-i18n="opt_select">Select...</option>
+                            <option value="HealthCore Austin Central">HealthCore Austin Central</option>
+                            <option value="HealthCore San Antonio">HealthCore San Antonio</option>
+                            <option value="HealthCore Miami">HealthCore Miami</option>
+                            <option value="HealthCore Atlanta">HealthCore Atlanta</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-cyan-600">
+                            <svg class="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.144l3.71-3.914a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-bold mb-2" data-i18n="l_insurance_q">Do you have medical insurance?</label>
+                <div class="flex space-x-6">
+                    <label><input type="radio" name="has_insurance" value="Yes" class="mr-2"> <span data-i18n="v_yes">Yes</span></label>
+                    <label><input type="radio" name="has_insurance" value="No" class="mr-2" checked> <span data-i18n="v_no">No</span></label>
+                </div>
+            </div>
+
+            <div id="insuranceSection" class="hidden bg-slate-50 p-4 rounded-lg border space-y-4">
+                <input type="text" name="insurance_provider" class="w-full border p-3 rounded-lg" placeholder="Provider Name" data-i18n-ph="ph_provider">
+                <input type="text" name="insurance_member_id" class="w-full border p-3 rounded-lg" placeholder="Member ID" data-i18n-ph="ph_mid">
+            </div>
+
+            <div>
+                <label for="concernText" class="block font-bold mb-2" data-i18n="l_concern">Reason for consultation</label>
+                <textarea name="health_concern" id="concernText" rows="4" class="w-full border p-3 rounded-lg" minlength="20" maxlength="500"></textarea>
+                <div class="text-right text-sm text-slate-500" id="charCounter">0 / 500</div>
+            </div>
+
+            <label class="flex items-start space-x-3 text-sm">
+                <input type="checkbox" name="contact_consent" required class="mt-1">
+                <span data-i18n="l_consent">I consent to HealthCore contacting me to confirm the appointment.</span>
+            </label>
+
+            <div class="bg-blue-50 p-4 rounded-lg text-sm text-blue-800" data-i18n="partner_note">
+                Are you a healthcare provider or organization? Contact partnerships@healthcore.com
+            </div>
+
+            <button type="submit" class="w-full bg-blue-700 text-white py-4 rounded-xl font-extrabold text-lg hover:bg-blue-800 transition shadow-lg" data-i18n="submit_btn">Send Inquiry</button>
+        </form>
+    </div>
+    <script src="validation.js"></script>
+</body>
+</html>

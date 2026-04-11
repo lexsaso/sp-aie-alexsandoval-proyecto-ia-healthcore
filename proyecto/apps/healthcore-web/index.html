@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthCore | Healthcare that fits your life</title>
+    <link rel="stylesheet" href="assets/styles/tailwind.min.css">
+    <link rel="stylesheet" href="assets/styles/modern-theme.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalOrganization",
+      "name": "HealthCore",
+      "url": "https://www.healthcore.com",
+      "logo": "https://www.healthcore.com/logo.png",
+      "foundingDate": "2011",
+      "availableLanguage": ["English", "Spanish"]
+    }
+    </script>
+</head>
+<body class="hc-site hc-home bg-slate-50 text-slate-800 font-sans">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="text-2xl font-bold text-blue-700">HealthCore</div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="hover:text-blue-600 transition" data-i18n="nav_home">Home</a>
+                    <a href="#services" class="hover:text-blue-600 transition" data-i18n="nav_services">Services</a>
+                    <a href="#locations" class="hover:text-blue-600 transition" data-i18n="nav_locations">Locations</a>
+                    <a href="application.html" class="hover:text-blue-600 transition" data-i18n="nav_request">Appointment</a>
+                    <button type="button" onclick="toggleLanguage()" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold" id="langSwitcher">ES</button>
+                </div>
+            </div>
+            <div class="md:hidden pb-4 flex flex-wrap gap-3 items-center text-sm">
+                <a href="#home" class="hover:text-blue-600 transition" data-i18n="nav_home">Home</a>
+                <a href="#services" class="hover:text-blue-600 transition" data-i18n="nav_services">Services</a>
+                <a href="#locations" class="hover:text-blue-600 transition" data-i18n="nav_locations">Locations</a>
+                <a href="application.html" class="hover:text-blue-600 transition" data-i18n="nav_request">Appointment</a>
+                <button type="button" onclick="toggleLanguage()" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold" id="langSwitcherMobile">ES</button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative bg-blue-700 py-24 text-white">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6" data-i18n="hero_title">Healthcare that fits your life</h1>
+            <p class="text-xl mb-10 max-w-3xl mx-auto text-blue-100" data-i18n="hero_subtitle">12 outpatient clinics in the US and UK offering same-day appointments, extended hours, and bilingual care.</p>
+            <a href="application.html" class="bg-white text-blue-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition shadow-lg" data-i18n="cta_btn">Request an Appointment</a>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12" data-i18n="services_title">Our Services</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+                <div class="inline-flex px-3 py-1 bg-blue-100 text-blue-700 rounded-lg items-center justify-center mb-4 text-sm font-semibold whitespace-nowrap">Primary</div>
+                <h3 class="text-xl font-bold mb-3" data-i18n="s1_title">Primary Care</h3>
+                <p class="text-slate-600" data-i18n="s1_desc">Chronic disease management including diabetes, hypertension, and asthma.</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+                <div class="inline-flex px-3 py-1 bg-blue-100 text-blue-700 rounded-lg items-center justify-center mb-4 text-sm font-semibold whitespace-nowrap">Specialist</div>
+                <h3 class="text-xl font-bold mb-3" data-i18n="s2_title">Specialists</h3>
+                <p class="text-slate-600" data-i18n="s2_desc">Cardiology, endocrinology, pulmonology, and women health within our network.</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+                <div class="inline-flex px-3 py-1 bg-blue-100 text-blue-700 rounded-lg items-center justify-center mb-4 text-sm font-semibold whitespace-nowrap">Preventive</div>
+                <h3 class="text-xl font-bold mb-3" data-i18n="s3_title">Preventive Health</h3>
+                <p class="text-slate-600" data-i18n="s3_desc">Check-ups, vaccinations, and mental health counseling for your wellbeing.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="locations" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12" data-i18n="loc_title">US Locations</h2>
+            <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-blue-700 text-white">
+                            <th class="p-4" data-i18n="th_name">Clinic Name</th>
+                            <th class="p-4" data-i18n="th_city">City</th>
+                            <th class="p-4" data-i18n="th_phone">Phone</th>
+                            <th class="p-4" data-i18n="th_hours">Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200">
+                        <tr><td class="p-4 font-semibold">HealthCore Austin Central</td><td class="p-4">Austin, TX</td><td class="p-4">(512) 340-8800</td><td class="p-4" data-i18n="h_austin_c">Mon-Fri 7am-8pm | Sat 9am-3pm</td></tr>
+                        <tr><td class="p-4 font-semibold">HealthCore Austin North</td><td class="p-4">Austin, TX</td><td class="p-4">(512) 340-8810</td><td class="p-4" data-i18n="h_austin_n">Mon-Fri 8am-7pm</td></tr>
+                        <tr><td class="p-4 font-semibold">HealthCore San Antonio</td><td class="p-4">San Antonio, TX</td><td class="p-4">(210) 720-4400</td><td class="p-4" data-i18n="h_sa">Mon-Fri 8am-6pm | Sat 9am-1pm</td></tr>
+                        <tr><td class="p-4 font-semibold">HealthCore Miami</td><td class="p-4">Miami, FL</td><td class="p-4">(305) 510-7700</td><td class="p-4" data-i18n="h_miami">Mon-Fri 7am-8pm | Sat 9am-4pm</td></tr>
+                        <tr><td class="p-4 font-semibold">HealthCore Atlanta</td><td class="p-4">Atlanta, GA</td><td class="p-4">(404) 330-9900</td><td class="p-4" data-i18n="h_atl">Mon-Fri 8am-7pm</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+            <div>
+                <h4 class="text-white font-bold mb-4">HealthCore</h4>
+                <p>© 2026 HealthCore. <span data-i18n="footer_rights">All rights reserved.</span></p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4" data-i18n="footer_contact">Contact</h4>
+                <p>Austin: (512) 340-8800</p>
+                <p>Miami: (305) 510-7700</p>
+                <p>UK: +44 20 7946 0100</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4" data-i18n="footer_social">Follow Us</h4>
+                <div class="flex space-x-4">
+                    <span>LinkedIn</span><span>Facebook</span><span>Instagram</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="validation.js"></script>
+</body>
+</html>
