@@ -1,0 +1,13 @@
+{
+  "name": "sp-aie-alexsandoval-proyecto-ia-healthcore",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "tsc --noEmit",
+    "dev": "tsx src/index.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
