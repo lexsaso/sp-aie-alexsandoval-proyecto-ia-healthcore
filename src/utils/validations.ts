@@ -1,13 +1,15 @@
-import { CitaMedica, Paciente } from '../types/models';
+import { Cita, Paciente } from '../types/models';
 
-export const validarPaciente = (paciente: Paciente): boolean => {
-    const nombreValido = paciente.nombre.trim().length > 2;
-    const edadValida = paciente.edad > 0 && paciente.edad < 120;
-    return nombreValido && edadValida;
+export const validarCitaHealthCore = (cita: Cita): boolean => {
+    const ahora = new Date();
+
+    if (cita.estado === 'programada' && cita.fecha < ahora) return false;
+    if (cita.costo < 0) return false;
+
+    return true;
 };
 
-export const validarCita = (cita: CitaMedica): boolean => {
-    const fechaValida = cita.fecha.getTime() > Date.now();
-    const costoValido = cita.costo >= 0;
-    return fechaValida && costoValido;
+export const validarCumplimiento = (paciente: Paciente): boolean => {
+    if (paciente.pais === 'UK' && !paciente.cumpleGDPR) return false;
+    return true;
 };

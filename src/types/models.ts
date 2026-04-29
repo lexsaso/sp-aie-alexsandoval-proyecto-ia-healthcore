@@ -1,15 +1,23 @@
+export type Pais = 'US' | 'UK';
+export type EstadoCita = 'programada' | 'completada' | 'no-show' | 'cancelada';
+
 export interface Paciente {
     id: number;
     nombre: string;
-    edad: number;
-    genero: 'M' | 'F' | 'Otro';
-    historialCompleto: boolean;
+    pais: Pais;
+    email: string;
+    fechaRegistro: Date;
+    cumpleGDPR: boolean;
 }
 
-export interface CitaMedica {
+export interface Cita {
     id: number;
     pacienteId: number;
+    clinicaId: number;
     especialidad: string;
     fecha: Date;
+    estado: EstadoCita;
     costo: number;
+    facturaPagada: boolean;
+    rechazadaPorSeguro: boolean;
 }

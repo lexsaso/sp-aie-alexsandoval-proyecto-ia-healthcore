@@ -1,42 +1,86 @@
-import { CitaMedica, Paciente } from './types/models';
-import { busquedaBinaria, busquedaLineal } from './utils/search';
-import { generarReporteCitas } from './utils/transformations';
-import { validarCita, validarPaciente } from './utils/validations';
+import { Cita, Paciente } from './types/models';
+import { buscarPacientePorId, filtrarPorRegion } from './utils/collections';
+import { generarReporteEjecutivo } from './utils/transformations';
+import { validarCitaHealthCore, validarCumplimiento } from './utils/validations';
 
 const pacientes: Paciente[] = [
-    { id: 1, nombre: 'Ana Perez', edad: 34, genero: 'F', historialCompleto: true },
-    { id: 2, nombre: 'Luis Gomez', edad: 41, genero: 'M', historialCompleto: false },
-    { id: 3, nombre: 'Sam Torres', edad: 29, genero: 'Otro', historialCompleto: true },
+    {
+        id: 1,
+        nombre: 'Alice Carter',
+        pais: 'US',
+        email: 'alice.carter@healthcore.com',
+        fechaRegistro: new Date('2026-04-01'),
+        cumpleGDPR: false,
+    },
+    {
+        id: 2,
+        nombre: 'Oliver Whitfield',
+        pais: 'UK',
+        email: 'oliver.whitfield@healthcore.co.uk',
+        fechaRegistro: new Date('2026-04-02'),
+        cumpleGDPR: true,
+    },
+    {
+        id: 3,
+        nombre: 'Amina Okonkwo',
+        pais: 'UK',
+        email: 'amina.okonkwo@healthcore.co.uk',
+        fechaRegistro: new Date('2026-04-03'),
+        cumpleGDPR: true,
+    },
 ];
 
-const citas: CitaMedica[] = [
+const citasDePrueba: Cita[] = [
     {
         id: 101,
         pacienteId: 1,
-        especialidad: 'Cardiologia',
+        clinicaId: 1,
+        especialidad: 'General',
         fecha: new Date(Date.now() + 1000 * 60 * 60 * 24),
-        costo: 120,
+        estado: 'no-show',
+        costo: 150,
+        facturaPagada: false,
+        rechazadaPorSeguro: false,
     },
     {
         id: 102,
         pacienteId: 2,
-        especialidad: 'Dermatologia',
+        clinicaId: 1,
+        especialidad: 'Dental',
         fecha: new Date(Date.now() + 1000 * 60 * 60 * 48),
-        costo: 85,
+        estado: 'completada',
+        costo: 200,
+        facturaPagada: true,
+        rechazadaPorSeguro: true,
     },
     {
         id: 103,
         pacienteId: 3,
-        especialidad: 'Neurologia',
+        clinicaId: 2,
+        especialidad: 'Pediatria',
         fecha: new Date(Date.now() + 1000 * 60 * 60 * 72),
-        costo: 200,
+        estado: 'programada',
+        costo: 120,
+        facturaPagada: false,
+        rechazadaPorSeguro: false,
     },
 ];
 
 const pacientesOrdenados = [...pacientes].sort((a, b) => a.id - b.id);
 
-console.log('Paciente valido (id=1):', validarPaciente(pacientes[0]));
-console.log('Cita valida (id=101):', validarCita(citas[0]));
-console.log('Busqueda lineal paciente id=2:', busquedaLineal(pacientes, 2));
-console.log('Busqueda binaria paciente id=3:', busquedaBinaria(pacientesOrdenados, 3));
-console.log('Reporte citas:', generarReporteCitas(citas));
+console.log('--- VALIDACIONES DE CUMPLIMIENTO ---');
+console.log('Paciente UK cumple GDPR (id=2):', validarCumplimiento(pacientes[1]));
+console.log('Paciente US (id=1):', validarCumplimiento(pacientes[0]));
+
+console.log('--- VALIDACIONES DE CITA ---');
+console.log('Cita valida (id=101):', validarCitaHealthCore(citasDePrueba[0]));
+
+console.log('--- BUSQUEDA BINARIA ---');
+console.log('Paciente id=3:', buscarPacientePorId(pacientesOrdenados, 3));
+
+console.log('--- FILTRO REGIONAL ---');
+console.log('Citas UK:', filtrarPorRegion(citasDePrueba, pacientes, 'UK').length);
+console.log('Citas US:', filtrarPorRegion(citasDePrueba, pacientes, 'US').length);
+
+console.log('--- REPORTE PARA LA DRA. OKONKWO ---');
+console.log(generarReporteEjecutivo(citasDePrueba));
