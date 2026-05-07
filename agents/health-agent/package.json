@@ -1,0 +1,14 @@
+{
+  "name": "@agents/health-agent",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "tsc --noEmit",
+    "dev": "tsx src/index.ts",
+    "test": "tsx src/tests/run.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

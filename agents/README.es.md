@@ -6,3 +6,7 @@ Cada subcarpeta dentro de `agents/` debería representar **un agente concreto** 
 
 - **Propósito principal**: centralizar el desarrollo de agentes reutilizables para la compañía dentro del monorepo.
 - **Recomendación**: documenta aquí el catálogo de agentes que se vaya creando y enlaza a los READMEs de cada agente.
+
+## Catálogo actual
+
+- [health-agent](./health-agent/README.es.md): lógica TypeScript migrada desde `viejo/src` hacia `agents/health-agent/src`.

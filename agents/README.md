@@ -7,4 +7,8 @@ Each subfolder under `agents/` should represent **one concrete agent** (for exam
 - **Main purpose**: centralize reusable agent development for the company in one monorepo.
 - **Recommendation**: maintain a catalog of agents here as they are created and link to each agent’s README.
 
+## Current catalog
+
+- [health-agent](./health-agent/README.md): migrated TypeScript logic from legacy `viejo/src` into `agents/health-agent/src`.
+
 > _Spanish version: [README.es.md](./README.es.md)._
